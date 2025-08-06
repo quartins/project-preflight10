@@ -1,4 +1,3 @@
-// src/components/AddTask.tsx
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -7,23 +6,36 @@ type Subject = {
   name: string;
 };
 
-export default function AddTask({ onAdded }: { onAdded: () => void }) {
+type Props = {
+  onAdded: () => void;
+  refreshTrigger?: boolean; // 👈 รับ trigger มาจาก props
+};
+
+export default function AddTask({ onAdded, refreshTrigger }: Props) {
   const [title, setTitle] = useState("");
   const [subjectId, setSubjectId] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [status, setStatus] = useState("pending");
   const [subjects, setSubjects] = useState<Subject[]>([]);
 
+  // 👇 useEffect ที่จะรันทุกครั้งเมื่อ refreshTrigger เปลี่ยน
   useEffect(() => {
     const fetchSubjects = async () => {
       const token = localStorage.getItem("token");
-      const res = await axios.get<Subject[]>("/api/subjects", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setSubjects(res.data);
+      if (!token) return;
+
+      try {
+        const res = await axios.get<Subject[]>("/api/subjects", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setSubjects(res.data);
+      } catch (err) {
+        console.error("Failed to fetch subjects", err);
+      }
     };
+
     fetchSubjects();
-  }, []);
+  }, [refreshTrigger]); // 👈 จะ fetch ใหม่เมื่อ subject เปลี่ยน
 
   const handleAddTask = async () => {
     const token = localStorage.getItem("token");
@@ -35,17 +47,25 @@ export default function AddTask({ onAdded }: { onAdded: () => void }) {
     try {
       await axios.post(
         "/api/tasks",
-        { title, subjectId: Number(subjectId), dueDate, status },
+        {
+          title,
+          subjectId: Number(subjectId),
+          dueDate,
+          status,
+        },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
+
+      // Reset form
       setTitle("");
       setSubjectId("");
       setDueDate("");
       setStatus("pending");
+
       onAdded(); // รีเฟรช TaskList
     } catch (err) {
       console.error("Failed to add task", err);
@@ -61,10 +81,7 @@ export default function AddTask({ onAdded }: { onAdded: () => void }) {
         onChange={(e) => setTitle(e.target.value)}
       />
 
-      <select
-        value={subjectId}
-        onChange={(e) => setSubjectId(e.target.value)}
-      >
+      <select value={subjectId} onChange={(e) => setSubjectId(e.target.value)}>
         <option value="">-- Select Subject --</option>
         {subjects.map((subj) => (
           <option key={subj.id} value={subj.id}>

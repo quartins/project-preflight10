@@ -293,15 +293,22 @@ export default function TodoApp() {
 
   return (
     <div>
-      {/* <h2>📘 Subjects</h2> */}
+       {/* <h2>Add Subject</h2> */}
       <AddSubject onAdded={() => setRefreshSubject(!refreshSubject)} />
-      <SubjectList key={refreshSubject.toString()} />
+
+      <h3>Subject List</h3>
+      {/* <SubjectList key={refreshSubject.toString()} /> */}
+      <SubjectList refreshTrigger={refreshSubject} />
 
       <hr />
 
       <h2>📝 Tasks</h2>
-      <AddTask onAdded={() => setRefreshTask(!refreshTask)} />
+      <AddTask
+        onAdded={() => setRefreshTask(!refreshTask)}
+        refreshTrigger={refreshSubject} 
+      />
       <TaskList key={refreshTask.toString()} />
     </div>
   );
 }
+
