@@ -147,54 +147,51 @@ export default function TaskList() {
     return <p>No subjects found. Please add a subject first.</p>;
 
   return (
-  
-    <div className="tasklist-container">
-      {subjects.map((subject) => (
+  <div className="tasklist-container">
+    {subjects
+      .filter((subject) => tasksBySubjectId[subject.id]?.length > 0)  // กรองเฉพาะวิชาที่มี task
+      .map((subject) => (
         <section key={subject.id} className="subject-section">
           <h2 className="subject-title">{subject.name}</h2>
 
-          {tasksBySubjectId[subject.id]?.length ? (
-            <ul className="task-list">
-              {tasksBySubjectId[subject.id].map((task) => (
-                <li key={task.id} className="task-item">
-                  {/* แสดง task ปกติ */}
-                  <div className="task-content">
-                    <div>
-                      <div className="task-title">
-                        <strong>Title:</strong> {task.title}
-                      </div>
-                      {task.description && (
-                        <div className="task-description">
-                          <strong>Description:</strong> {task.description}
-                        </div>
-                      )}
-                      <div className="task-meta">
-                        Due: {dayjs(task.dueDate).format("DD/MM/YYYY")} | Status: {task.status}
-                      </div>
+          <ul className="task-list">
+            {tasksBySubjectId[subject.id].map((task) => (
+              <li key={task.id} className="task-item">
+                {/* แสดง task ปกติ */}
+                <div className="task-content">
+                  <div>
+                    <div className="task-title">
+                      <strong>Title:</strong> {task.title}
                     </div>
-                    <div className="button-group icon-buttons">
-                      <button
-                        className="btn btn-edit"
-                        onClick={() => startEdit(task)}
-                        title="Edit Task"
-                      >
-                        <img src="/edit.png" alt="Edit" className="icon" />
-                      </button>
-                      <button
-                        className="btn btn-delete"
-                        onClick={() => confirmDeleteTask(task.id)}
-                        title="Delete Task"
-                      >
-                        <img src="/delete.png" alt="Delete" className="icon" />
-                      </button>
+                    {task.description && (
+                      <div className="task-description">
+                        <strong>Description:</strong> {task.description}
+                      </div>
+                    )}
+                    <div className="task-meta">
+                      Due: {dayjs(task.dueDate).format("DD/MM/YYYY")} | Status: {task.status}
                     </div>
                   </div>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No tasks for this subject.</p>
-          )}
+                  <div className="button-group icon-buttons">
+                    <button
+                      className="btn btn-edit"
+                      onClick={() => startEdit(task)}
+                      title="Edit Task"
+                    >
+                      <img src="/edit.png" alt="Edit" className="icon" />
+                    </button>
+                    <button
+                      className="btn btn-delete"
+                      onClick={() => confirmDeleteTask(task.id)}
+                      title="Delete Task"
+                    >
+                      <img src="/delete.png" alt="Delete" className="icon" />
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
         </section>
       ))}
 
