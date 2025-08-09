@@ -318,3 +318,115 @@
 [2025-08-06 11:14:52] Reading config file '/app/drizzle.config.ts'
 [2025-08-06 11:14:53] Using 'postgres' driver for database querying
 [2025-08-06 11:14:54] [⣷] applying migrations...
+[2025-08-06 16:31:31] 
+[2025-08-06 16:31:31] > db:migrate
+[2025-08-06 16:31:31] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-06 16:31:31] 
+[2025-08-06 16:31:32] No config path provided, using default 'drizzle.config.ts'
+[2025-08-06 16:31:32] Reading config file '/app/drizzle.config.ts'
+[2025-08-06 16:31:33] Using 'postgres' driver for database querying
+[2025-08-06 16:31:33] [⣷] applying migrations...
+[2025-08-06 16:40:00] 
+[2025-08-06 16:40:00] > db:migrate
+[2025-08-06 16:40:00] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-06 16:40:00] 
+[2025-08-06 16:40:01] No config path provided, using default 'drizzle.config.ts'
+[2025-08-06 16:40:01] Reading config file '/app/drizzle.config.ts'
+[2025-08-06 16:40:02] Using 'postgres' driver for database querying
+[2025-08-06 16:40:02] [⣷] applying migrations...
+[2025-08-08 02:48:46] 
+[2025-08-08 02:48:46] > db:migrate
+[2025-08-08 02:48:46] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-08 02:48:46] 
+[2025-08-08 02:48:48] No config path provided, using default 'drizzle.config.ts'
+[2025-08-08 02:48:48] Reading config file '/app/drizzle.config.ts'
+[2025-08-08 02:48:48] Using 'postgres' driver for database querying
+[2025-08-08 02:48:49] [⣷] applying migrations...
+[2025-08-08 02:53:22] 
+[2025-08-08 02:53:22] > db:migrate
+[2025-08-08 02:53:22] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-08 02:53:22] 
+[2025-08-08 02:53:23] No config path provided, using default 'drizzle.config.ts'
+[2025-08-08 02:53:23] Reading config file '/app/drizzle.config.ts'
+[2025-08-08 02:53:23] Using 'postgres' driver for database querying
+[2025-08-08 02:53:24] [⣷] applying migrations...
+[2025-08-08 03:11:46] 
+[2025-08-08 03:11:46] > db:migrate
+[2025-08-08 03:11:46] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-08 03:11:46] 
+[2025-08-08 03:11:47] No config path provided, using default 'drizzle.config.ts'
+[2025-08-08 03:11:47] Reading config file '/app/drizzle.config.ts'
+[2025-08-08 03:11:47] Using 'postgres' driver for database querying
+[2025-08-08 03:11:48] [⣷] applying migrations...
+[2025-08-08 03:26:33] 
+[2025-08-08 03:26:33] > db:migrate
+[2025-08-08 03:26:33] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-08 03:26:33] 
+[2025-08-08 03:26:35] No config path provided, using default 'drizzle.config.ts'
+[2025-08-08 03:26:35] Reading config file '/app/drizzle.config.ts'
+[2025-08-08 03:26:35] Using 'postgres' driver for database querying
+[2025-08-08 03:26:36] [⣷] applying migrations...
+[2025-08-08 03:29:35] 
+[2025-08-08 03:29:35] > db:migrate
+[2025-08-08 03:29:35] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-08 03:29:35] 
+[2025-08-08 03:29:37] No config path provided, using default 'drizzle.config.ts'
+[2025-08-08 03:29:37] Reading config file '/app/drizzle.config.ts'
+[2025-08-08 03:29:37] Using 'postgres' driver for database querying
+[2025-08-08 03:29:38] [⣷] applying migrations...
+[2025-08-08 03:38:03] 
+[2025-08-08 03:38:03] > db:migrate
+[2025-08-08 03:38:03] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-08 03:38:03] 
+[2025-08-08 03:38:04] No config path provided, using default 'drizzle.config.ts'
+[2025-08-08 03:38:04] Reading config file '/app/drizzle.config.ts'
+[2025-08-08 03:38:05] Using 'postgres' driver for database querying
+[2025-08-08 03:38:06] [⣷] applying migrations...
+[2025-08-08 04:34:01] 
+[2025-08-08 04:34:01] > db:migrate
+[2025-08-08 04:34:01] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-08 04:34:01] 
+[2025-08-08 04:34:02] No config path provided, using default 'drizzle.config.ts'
+[2025-08-08 04:34:02] Reading config file '/app/drizzle.config.ts'
+[2025-08-08 04:34:03] Using 'postgres' driver for database querying
+[2025-08-08 04:34:04] [⣷] applying migrations...
+[2025-08-08 04:55:36] 
+[2025-08-08 04:55:36] > db:migrate
+[2025-08-08 04:55:36] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-08 04:55:36] 
+[2025-08-08 04:55:37] No config path provided, using default 'drizzle.config.ts'
+[2025-08-08 04:55:37] Reading config file '/app/drizzle.config.ts'
+[2025-08-08 04:55:37] Using 'postgres' driver for database querying
+[2025-08-08 04:55:38] [⣷] applying migrations...
+[2025-08-09 06:14:06] 
+[2025-08-09 06:14:06] > db:migrate
+[2025-08-09 06:14:06] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-09 06:14:06] 
+[2025-08-09 06:14:07] No config path provided, using default 'drizzle.config.ts'
+[2025-08-09 06:14:07] Reading config file '/app/drizzle.config.ts'
+[2025-08-09 06:14:07] Using 'postgres' driver for database querying
+[2025-08-09 06:14:08] [⣷] applying migrations...
+[2025-08-09 06:29:02] 
+[2025-08-09 06:29:02] > db:migrate
+[2025-08-09 06:29:02] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-09 06:29:02] 
+[2025-08-09 06:29:03] No config path provided, using default 'drizzle.config.ts'
+[2025-08-09 06:29:03] Reading config file '/app/drizzle.config.ts'
+[2025-08-09 06:29:03] Using 'postgres' driver for database querying
+[2025-08-09 06:29:04] [⣷] applying migrations...
+[2025-08-09 06:43:52] 
+[2025-08-09 06:43:52] > db:migrate
+[2025-08-09 06:43:52] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-09 06:43:52] 
+[2025-08-09 06:43:54] No config path provided, using default 'drizzle.config.ts'
+[2025-08-09 06:43:54] Reading config file '/app/drizzle.config.ts'
+[2025-08-09 06:43:54] Using 'postgres' driver for database querying
+[2025-08-09 06:43:55] [⣷] applying migrations...
+[2025-08-09 07:05:23] 
+[2025-08-09 07:05:23] > db:migrate
+[2025-08-09 07:05:23] > cross-env NODE_OPTIONS='--import tsx' drizzle-kit migrate
+[2025-08-09 07:05:23] 
+[2025-08-09 07:05:25] No config path provided, using default 'drizzle.config.ts'
+[2025-08-09 07:05:25] Reading config file '/app/drizzle.config.ts'
+[2025-08-09 07:05:26] Using 'postgres' driver for database querying
+[2025-08-09 07:05:26] [⣷] applying migrations...

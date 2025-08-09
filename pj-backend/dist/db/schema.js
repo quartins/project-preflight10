@@ -1,8 +1,36 @@
-import { pgTable, timestamp, uuid, varchar, boolean, } from "drizzle-orm/pg-core";
+import { pgTable, timestamp, uuid, varchar, boolean, serial, text, integer, date } from "drizzle-orm/pg-core";
 export const todoTable = pgTable("todo", {
     id: uuid("id").primaryKey().defaultRandom(),
     todoText: varchar("todo_text", { length: 255 }).notNull(),
     isDone: boolean("is_done").default(false),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at", { mode: "date", precision: 3 }).$onUpdate(() => new Date()),
+});
+// ✅ ตาราง users
+export const users = pgTable("users", {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: varchar("name", { length: 100 }).notNull(),
+    email: varchar("email", { length: 255 }).notNull().unique(),
+    password: varchar("password", { length: 255 }).notNull(),
+    role: varchar("role", { length: 20 }).default("student"),
+    created_at: timestamp("created_at").defaultNow().notNull(),
+});
+// SUBJECTS TABLE
+export const subjects = pgTable("subjects", {
+    id: serial("id").primaryKey(),
+    name: text("name").notNull(),
+    userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
+    //color: text("color"), // ลบได้ถ้าไม่ใช้
+    createdAt: timestamp("created_at").defaultNow(),
+});
+// TASKS TABLE (แทน todo)
+export const tasks = pgTable("tasks", {
+    id: serial("id").primaryKey(),
+    title: text("title").notNull(),
+    description: text("description"),
+    dueDate: date("due_date").notNull(),
+    status: text("status").notNull(), // ควรมี validation ภายนอก (เช่น Zod)
+    subjectId: integer("subject_id").references(() => subjects.id, { onDelete: "cascade" }),
+    userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at").defaultNow(),
 });

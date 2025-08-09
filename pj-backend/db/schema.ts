@@ -51,4 +51,3 @@ userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-

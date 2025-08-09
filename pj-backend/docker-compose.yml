@@ -1,16 +1,16 @@
-name: preflight # You can also change this to another name to avoid warning with existing group.
+name: pf_g10 # You can also change this to another name to avoid warning with existing group.
 services:
   backend:
-    container_name: pf-backend
+    container_name: pj-backend
     build: .
     ports:
-      - 3763:3763
-    env_file:
-      - .env  
+      - ${PORT}:3000
+    # env_file:
+    #   - .env   
     networks:
-      - preflight_pf-net
+      - pf_g10_pf-net
     environment:
-      - NODE_ENV=production
+      # - NODE_ENV=production
       - POSTGRES_DB=${POSTGRES_DB}
       - POSTGRES_PORT=${POSTGRES_PORT}
       - POSTGRES_HOST=${POSTGRES_HOST}
@@ -26,5 +26,5 @@ services:
             'npm run db:migrate | awk ''{ print strftime("[%Y-%m-%d %H:%M:%S]"), $0; fflush(); }'' | tee -a /app/logs/migration.log',
           ]
 networks:
-  preflight_pf-net: # Check by using `docker network ls` command
+  pf_g10_pf-net: # Check by using `docker network ls` command
     external: true

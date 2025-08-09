@@ -12,9 +12,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "http://localhost:3763/todo",
-          "host": ["http://localhost:3763"],
-          "path": ["todo"]
+          "raw": "http://localhost:3000/todo",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "path": [
+            "todo"
+          ]
         }
       },
       "response": []
@@ -34,9 +38,13 @@
           }
         },
         "url": {
-          "raw": "http://localhost:3763/todo",
-          "host": ["http://localhost:3763"],
-          "path": ["todo"]
+          "raw": "http://localhost:3000/todo",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "path": [
+            "todo"
+          ]
         }
       },
       "response": []
@@ -56,9 +64,13 @@
           }
         },
         "url": {
-          "raw": "http://localhost:3763/todo",
-          "host": ["http://localhost:3763"],
-          "path": ["todo"]
+          "raw": "http://localhost:3000/todo",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "path": [
+            "todo"
+          ]
         }
       },
       "response": []
@@ -78,9 +90,13 @@
           }
         },
         "url": {
-          "raw": "http://localhost:3763/todo",
-          "host": ["http://localhost:3763"],
-          "path": ["todo"]
+          "raw": "http://localhost:3000/todo",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "path": [
+            "todo"
+          ]
         }
       },
       "response": []
@@ -91,9 +107,14 @@
         "method": "POST",
         "header": [],
         "url": {
-          "raw": "http://localhost:3763/todo/all",
-          "host": ["http://localhost:3763"],
-          "path": ["todo", "all"]
+          "raw": "http://localhost:3000/todo/all",
+          "host": [
+            "http://localhost:3000"
+          ],
+          "path": [
+            "todo",
+            "all"
+          ]
         }
       },
       "response": []

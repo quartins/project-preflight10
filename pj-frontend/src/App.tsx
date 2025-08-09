@@ -1,258 +1,231 @@
-/*import { useEffect, useState } from "react";
-import axios from "axios";
-import { type TodoItem } from "./types";
-import dayjs from "dayjs";
-function App() {
-  const [todos, setTodos] = useState<TodoItem[]>([]);
-  const [inputText, setInputText] = useState("");
-  const [mode, setMode] = useState<"ADD" | "EDIT">("ADD");
-  const [curTodoId, setCurTodoId] = useState("");
 
-  async function fetchData() {
-    const res = await axios.get<TodoItem[]>("api/todo");
-    setTodos(res.data);
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setInputText(e.target.value);
-  }
-
-  function handleSubmit() {
-    if (!inputText) return;
-    if (mode === "ADD") {
-      axios
-        .request({
-          url: "/api/todo",
-          method: "put",
-          data: { todoText: inputText },
-        })
-        .then(() => {
-          setInputText("");
-        })
-        .then(fetchData)
-        .catch((err) => alert(err));
-    } else {
-      axios
-        .request({
-          url: "/api/todo",
-          method: "patch",
-          data: { id: curTodoId, todoText: inputText },
-        })
-        .then(() => {
-          setInputText("");
-          setMode("ADD");
-          setCurTodoId("");
-        })
-        .then(fetchData)
-        .catch((err) => alert(err));
-    }
-  }
-
-  function handleDelete(id: string) {
-    axios
-      .delete("/api/todo", { data: { id } })
-      .then(fetchData)
-      .then(() => {
-        setMode("ADD");
-        setInputText("");
-      })
-      .catch((err) => alert(err));
-  }
-
-  function handleCancel() {
-    setMode("ADD");
-    setInputText("");
-    setCurTodoId("");
-  }
-  return (
-    <div className="container">
-      <header>
-        <h1>Todo App</h1>
-      </header>
-      <main>
-        <div style={{ display: "flex", alignItems: "start" }}>
-          <input
-            type="text"
-            onChange={handleChange}
-            value={inputText}
-            data-cy="input-text"
-          />
-          <button onClick={handleSubmit} data-cy="submit">
-            {mode === "ADD" ? "Submit" : "Update"}
-          </button>
-          {mode === "EDIT" && (
-            <button onClick={handleCancel} className="secondary">
-              Cancel
-            </button>
-          )}
-        </div>
-        <div data-cy="todo-item-wrapper">
-          {todos.sort(compareDate).map((item, idx) => {
-            const { date, time } = formatDateTime(item.createdAt);
-            const text = item.todoText;
-            return (
-              <article
-                key={item.id}
-                style={{
-                  display: "flex",
-                  gap: "0.5rem",
-                }}
-              >
-                <div>({idx + 1})</div>
-                <div>📅{date}</div>
-                <div>⏰{time}</div>
-                <div data-cy="todo-item-text">📰{text}</div>
-                <div
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    setMode("EDIT");
-                    setCurTodoId(item.id);
-                    setInputText(item.todoText);
-                  }}
-                  data-cy="todo-item-update"
-                >
-                  {curTodoId !== item.id ? "🖊️" : "✍🏻"}
-                </div>
-
-                {mode === "ADD" && (
-                  <div
-                    style={{ cursor: "pointer" }}
-                    onClick={() => handleDelete(item.id)}
-                    data-cy="todo-item-delete"
-                  >
-                    🗑️
-                  </div>
-                )}
-              </article>
-            );
-          })}
-        </div>
-      </main>
-    </div>
-  );
-}
-
-export default App;
-
-function formatDateTime(dateStr: string) {
-  if (!dayjs(dateStr).isValid()) {
-    return { date: "N/A", time: "N/A" };
-  }
-  const dt = dayjs(dateStr);
-  const date = dt.format("D/MM/YY");
-  const time = dt.format("HH:mm");
-  return { date, time };
-}
-
-function compareDate(a: TodoItem, b: TodoItem) {
-  const da = dayjs(a.createdAt);
-  const db = dayjs(b.createdAt);
-  return da.isBefore(db) ? -1 : 1;
-} */
-
-  // TodoAPI Thanchanok
-//  // src/App.tsx
-// import MyInformation from "./components/MyInformation";
+// import { useEffect, useState } from "react";
+// import Login from "./components/Login";
+// import Signup from "./components/Signup";
 // import TodoApp from "./components/TodoApp";
 
-// function App() {
-//   return (
-//     <div className="container" style={{ padding: "2rem", fontFamily: "sans-serif" }}>
-      
-      
-//       <section style={{ marginBottom: "2rem", padding: "1rem", border: "1px solid #ddd", borderRadius: "10px", background: "#f9f9f9" }}>
-//         <MyInformation />
-//       </section>
+// type Page = "login" | "signup" | "todo";
 
-//       <section style={{ padding: "1rem", border: "1px solid #ddd", borderRadius: "10px", background: "#fff" }}>
-//         <TodoApp />
-//       </section>
+// function App() {
+//   const [page, setPage] = useState<Page>("login");
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     if (token) setPage("todo");
+//   }, []);
+
+//   function logout() {
+//     localStorage.removeItem("token");
+//     setPage("login");
+//   }
+
+//   return (
+//     <div className="container" style={{ position: "relative", minHeight: "vh", paddingTop: "4rem" }}>
+
+//       {/* Header */}
+//       <header
+//         style={{
+//           position: "absolute",
+//           top: "1rem",
+//           left: 0,
+//           right: 0,
+//           display: "flex",
+//           justifyContent: "center",
+//           alignItems: "center",
+//           fontSize: "1.5rem",
+//           fontWeight: "bold",
+//         }}
+//       >
+//         <div style={{ position: "relative", width: "100%", textAlign: "center" }}>
+//           <h1 style={{ margin: 0 }}>Study Plan</h1>
+//           {page === "todo" && (
+//             <button
+//               onClick={logout}
+//               style={{
+//                 position: "absolute",
+//                 right: "1rem",
+//                 top: "0",
+//                 padding: "0.4rem 0.8rem",
+//                 fontSize: "1rem",
+//               }}
+//             >
+//               Logout
+//             </button>
+//           )}
+//         </div>
+//       </header>
+
+//       {/* Main content */}
+//       <main style={{ marginTop: "20px", padding: "1rem" }}>
+//         {page === "login" && (
+//           <Login
+//             goToSignup={() => setPage("signup")}
+//             onLogin={() => setPage("todo")}
+//           />
+//         )}
+//         {page === "signup" && (
+//           <Signup
+//             goToLogin={() => setPage("login")}
+//             onSignup={() => setPage("todo")}
+//           />
+//         )}
+//         {page === "todo" && <TodoApp />}
+//       </main>
 //     </div>
 //   );
 // }
 
-// export default App; 
 
-// Project Preflight //
-/*import { useEffect, useState } from "react";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+// export default App;
 
-type Page = "login" | "signup" | "todo";
 
-function App() {
-  const [page, setPage] = useState<Page>("login");
-  const [todos, setTodos] = useState<string[]>([]);
-  const [input, setInput] = useState("");
+// import { useEffect, useState } from "react";
+// import Login from "./components/Login";
+// import Signup from "./components/Signup";
+// import TodoApp from "./components/TodoApp";
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) setPage("todo");
-  }, []);
+// type Page = "login" | "signup" | "todo";
 
-  function logout() {
-    localStorage.removeItem("token");
-    setPage("login");
-  }
+// function App() {
+//   const [page, setPage] = useState<Page>("login");
 
-  function handleAdd() {
-    if (input.trim()) {
-      setTodos((prev) => [...prev, input]);
-      setInput("");
-    }
-  }
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     if (token) setPage("todo");
+//   }, []);
 
-  return (
-    <div className="container">
-      <header style={{ display: "flex", justifyContent: "space-between" }}>
-        <h1>Study Plan</h1>
-        {page === "todo" && <button onClick={logout}>Logout</button>}
-      </header>
+//   function logout() {
+//     localStorage.removeItem("token");
+//     setPage("login");
+//   }
 
-      <main>
-        {page === "login" && (
-          <Login
-            goToSignup={() => setPage("signup")}
-            onLogin={() => setPage("todo")}
-          />
-        )}
-        {page === "signup" && (
-          <Signup
-            goToLogin={() => setPage("login")}
-            onSignup={() => setPage("todo")}
-          />
-        )}
-        {page === "todo" && (
-          <>
-            <h2>Welcome to your Study Plan</h2>
-            <input
-              placeholder="Add todo..."
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-            />
-            <button onClick={handleAdd}>Add</button>
-            <ul>
-              {todos.map((todo, i) => (
-                <li key={i}>{todo}</li>
-              ))}
-            </ul>
-          </>
-        )}
-      </main>
-    </div>
-  );
-}
+//   return (
+//     <div className="container" style={{ paddingTop: "60px", minHeight: "100vh" }}>
+      
+//       {/* Navbar */}
+//       <nav
+//         style={{
+//           position: "fixed",
+//           top: 0,
+//           left: 0,
+//           right: 0,
+//           height: "60px",
+//           backgroundColor: "#f5f5f5",
+//           borderBottom: "1px solid #ccc",
+//           display: "flex",
+//           justifyContent: "space-between",
+//           alignItems: "center",
+//           padding: "0 1rem",
+//           zIndex: 1000,
+//         }}
+//       >
+//         <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>Study Plan</div>
 
-export default App;*/
+//         {page === "todo" && (
+//           <button
+//             onClick={logout}
+//             style={{
+//               padding: "0.4rem 0.8rem",
+//               fontSize: "1rem",
+//               border: "none",
+//               backgroundColor: "#e74c3c",
+//               color: "#fff",
+//               borderRadius: "4px",
+//               cursor: "pointer",
+//             }}
+//           >
+//             Logout
+//           </button>
+//         )}
+//       </nav>
+
+//       {/* Main content */}
+//       <main style={{ padding: "1rem" }}>
+//         {page === "login" && (
+//           <Login
+//             goToSignup={() => setPage("signup")}
+//             onLogin={() => setPage("todo")}
+//           />
+//         )}
+//         {page === "signup" && (
+//           <Signup
+//             goToLogin={() => setPage("login")}
+//             onSignup={() => setPage("todo")}
+//           />
+//         )}
+//         {page === "todo" && <TodoApp />}
+//       </main>
+//     </div>
+//   );
+// }
+
+// export default App;
+
+// import { useEffect, useState } from "react";
+// import Login from "./components/Login";
+// import Signup from "./components/Signup";
+// import TodoApp from "./components/TodoApp";
+// import "./css/Navbar.css"; // 👉 นำเข้าไฟล์ CSS ที่สร้าง
+
+// type Page = "login" | "signup" | "todo";
+
+// function App() {
+//   const [page, setPage] = useState<Page>("login");
+
+//   useEffect(() => {
+//     const token = localStorage.getItem("token");
+//     if (token) setPage("todo");
+//   }, []);
+
+//   function logout() {
+//     localStorage.removeItem("token");
+//     setPage("login");
+//   }
+
+//   return (
+//     <div className="container" style={{ paddingTop: "60px", minHeight: "100vh" }}>
+      
+//       {/* Navbar */}
+//       <nav className="navbar">
+//         <div className="navbar-logo">
+//           <img src="/iconweb.png" alt="Logo" />
+//           <span className="navbar-title">Study Plan</span>
+//         </div>
+
+//         {page === "todo" && (
+//           <button onClick={logout} className="logout-button">
+//             Logout
+//           </button>
+//         )}
+//       </nav>
+
+//       {/* Main content */}
+//       <main style={{ padding: "1rem" }}>
+//         {page === "login" && (
+//           <Login
+//             goToSignup={() => setPage("signup")}
+//             onLogin={() => setPage("todo")}
+//           />
+//         )}
+//         {page === "signup" && (
+//           <Signup
+//             goToLogin={() => setPage("login")}
+//             onSignup={() => setPage("todo")}
+//           />
+//         )}
+//         {page === "todo" && <TodoApp />}
+//       </main>
+//     </div>
+//   );
+// }
+
+// export default App;
 
 import { useEffect, useState } from "react";
 import Login from "./components/Login";
 import Signup from "./components/Signup";
 import TodoApp from "./components/TodoApp";
+import "./css/Navbar.css"; // 👉 นำเข้าไฟล์ CSS ที่สร้าง
 
 type Page = "login" | "signup" | "todo";
 
@@ -270,13 +243,24 @@ function App() {
   }
 
   return (
-    <div className="container">
-      <header style={{ display: "flex", justifyContent: "space-between" }}>
-        <h1>Study Plan</h1>
-        {page === "todo" && <button onClick={logout}>Logout</button>}
-      </header>
+    <div className="container" style={{ paddingTop: "60px", minHeight: "100vh" }}>
+      
+      {/* Navbar */}
+      <nav className="navbar">
+        <div className="navbar-logo">
+          <img src="/iconweb.png" alt="Logo" />
+          <span className="navbar-title">Study Plan</span>
+        </div>
 
-      <main>
+        {page === "todo" && (
+          <button onClick={logout} className="logout-button">
+            Logout
+          </button>
+        )}
+      </nav>
+
+      {/* Main content */}
+      <main style={{ padding: "1rem" }}>
         {page === "login" && (
           <Login
             goToSignup={() => setPage("signup")}
@@ -296,52 +280,3 @@ function App() {
 }
 
 export default App;
-
-
-// import { useEffect, useState } from "react";
-// import Login from "./components/Login";
-// import Signup from "./components/Signup";
-// import StudyPlanApp from "./components/StudyPlanApp"; // ✅ เปลี่ยนชื่อ import
-
-// type Page = "login" | "signup" | "todo";
-
-// function App() {
-//   const [page, setPage] = useState<Page>("login");
-
-//   useEffect(() => {
-//     const token = localStorage.getItem("token");
-//     if (token) setPage("todo");
-//   }, []);
-
-//   function logout() {
-//     localStorage.removeItem("token");
-//     setPage("login");
-//   }
-
-//   return (
-//     <div className="container">
-//       <header style={{ display: "flex", justifyContent: "space-between" }}>
-//         <h1>Study Plan</h1>
-//         {page === "todo" && <button onClick={logout}>Logout</button>}
-//       </header>
-
-//       <main>
-//         {page === "login" && (
-//           <Login
-//             goToSignup={() => setPage("signup")}
-//             onLogin={() => setPage("todo")}
-//           />
-//         )}
-//         {page === "signup" && (
-//           <Signup
-//             goToLogin={() => setPage("login")}
-//             onSignup={() => setPage("todo")}
-//           />
-//         )}
-//         {page === "todo" && <StudyPlanApp />} {/* ✅ เปลี่ยนตรงนี้ */}
-//       </main>
-//     </div>
-//   );
-// }
-
-// export default App;

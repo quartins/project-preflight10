@@ -89,19 +89,8 @@ export const subjects = pgTable("subjects", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-// //✅ TASKS TABLE (userId เป็น uuid)
-// export const tasks = pgTable("tasks", {
-//   id: serial("id").primaryKey(),
-//   title: text("title").notNull(),
-//   description: text("description"),
-//   dueDate: date("due_date").notNull(),
-//   status: text("status").notNull(),
-//   subjectId: integer("subject_id").references(() => subjects.id, { onDelete: "cascade" }),
-//   userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
-//   createdAt: timestamp("created_at").defaultNow(),
-// });
-
-export const todos = pgTable("todos", {
+//✅ TASKS TABLE (userId เป็น uuid)
+export const tasks = pgTable("tasks", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   description: text("description"),
@@ -111,6 +100,17 @@ export const todos = pgTable("todos", {
   userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
   createdAt: timestamp("created_at").defaultNow(),
 });
+
+// export const todos = pgTable("todos", {
+//   id: serial("id").primaryKey(),
+//   title: text("title").notNull(),
+//   description: text("description"),
+//   dueDate: date("due_date").notNull(),
+//   status: text("status").notNull(),
+//   subjectId: integer("subject_id").references(() => subjects.id, { onDelete: "cascade" }),
+//   userId: uuid("user_id").references(() => users.id, { onDelete: "cascade" }),
+//   createdAt: timestamp("created_at").defaultNow(),
+// });
 
 
 
