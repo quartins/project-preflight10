@@ -58,46 +58,73 @@
 // });
 
 
-describe("Frontend UI", () => {
+// cypress/e2e/frontend.cy.ts
+// cypress/e2e/frontend.cy.ts
+
+describe("Frontend UI - Study Plan App", () => {
   const FE = Cypress.env("FRONTEND_URL");
   const email = `test${Date.now()}@example.com`;
   const password = "123456";
 
-  it("registers and logs in", () => {
-    cy.visit(Cypress.env("FRONTEND_URL"));
+  before(() => {
+    // เข้าเว็บก่อนเริ่มเทส
+    cy.visit(FE);
+  });
+
+  it("should allow user signup and login", () => {
     cy.contains("Signup").click();
-    cy.get("[data-cy='signup-email']").type(email);
-    cy.get("[data-cy='signup-password']").type(password);
+
+    cy.get("[data-cy='signup-email']").should("be.visible").type(email);
+    cy.get("[data-cy='signup-password']").should("be.visible").type(password);
     cy.get("[data-cy='signup-submit']").click();
-    cy.contains("Logout"); // หมายถึง login สำเร็จ
+
+    // รอจนเห็นปุ่ม Logout แสดงว่าล็อกอินสำเร็จ
+    cy.contains("Logout", { timeout: 5000 }).should("be.visible");
   });
 
-  it("creates a subject", () => {
-    cy.get("[data-cy='subject-input']").type("Math");
+  it("should create a subject", () => {
+    cy.get("[data-cy='subject-input']").should("be.visible").type("Math");
     cy.get("[data-cy='subject-submit']").click();
-    cy.contains("Math");
+
+    cy.contains("Math").should("exist");
   });
 
-  it("creates a task", () => {
-    cy.get("[data-cy='task-input']").type("Homework 1");
+  it("should create a task under the subject", () => {
+    cy.get("[data-cy='task-input']").should("be.visible").type("Homework 1");
     cy.get("[data-cy='task-submit']").click();
-    cy.contains("Homework 1");
+
+    cy.contains("Homework 1").should("exist");
   });
 
-  it("updates a task", () => {
+  it("should update a task", () => {
     cy.contains("Homework 1").parent().find("[data-cy='task-edit']").click();
+
     cy.get("[data-cy='task-input']").clear().type("Homework 1 Updated");
     cy.get("[data-cy='task-submit']").click();
-    cy.contains("Homework 1 Updated");
+
+    cy.contains("Homework 1 Updated").should("exist");
   });
 
-  it("deletes a task", () => {
-    cy.contains("Homework 1 Updated").parent().find("[data-cy='task-delete']").click();
+  it("should delete a task", () => {
+    cy.contains("Homework 1 Updated")
+      .parent()
+      .find("[data-cy='task-delete']")
+      .click();
+
     cy.contains("Homework 1 Updated").should("not.exist");
   });
 
-  it("deletes a subject", () => {
-    cy.contains("Math").parent().find("[data-cy='subject-delete']").click();
+  it("should delete a subject", () => {
+    cy.contains("Math")
+      .parent()
+      .find("[data-cy='subject-delete']")
+      .click();
+
     cy.contains("Math").should("not.exist");
+  });
+
+  it("should logout successfully", () => {
+    cy.contains("Logout").click();
+    cy.contains("Login").should("be.visible");
   });
 });

@@ -196,76 +196,113 @@
 // });
 
 //test pf-pj
-before(() => {
-  const url = Cypress.env("BACKEND_URL");
-  // ล้างข้อมูลทั้งหมด
-  cy.request("POST", `${url}/reset`);
-});
 
-describe("Backend API", () => {
-  const url = Cypress.env("BACKEND_URL");
-  let token: string;
-  let subjectId: number;
-  let taskId: number;
+describe("Backend API - StudyPlan", () => {
+  const BE = Cypress.env("BACKEND_URL");
+  const email = `test${Date.now()}@example.com`;
+  const password = "123456";
 
-  it("registers and logs in user", () => {
-    const email = `test${Date.now()}@example.com`;
-    const password = "123456";
+  before(() => {
+    // reset DB
+    cy.request("POST", `${BE}/reset`).its("status").should("eq", 200);
+  });
 
-    cy.request("POST", `${url}/signup`, { email, password }).its("status").should("eq", 201);
+  it("signup and login (returns token)", () => {
+    cy.request("POST", `${BE}/signup`, { email, password }).its("status").should("eq", 201);
 
-    cy.request("POST", `${url}/login`, { email, password }).then((res) => {
+    cy.request("POST", `${BE}/login`, { email, password }).then((res) => {
+      expect(res.status).to.eq(200);
       expect(res.body).to.have.property("token");
-      token = res.body.token;
+      Cypress.env("token", res.body.token);
     });
   });
 
-  it("creates subject", () => {
+  it("protected endpoints reject no-token", () => {
     cy.request({
       method: "POST",
-      url: `${url}/subjects`,
-      headers: { Authorization: `Bearer ${token}` },
+      url: `${BE}/subjects`,
+      body: { name: "NoAuth" },
+      failOnStatusCode: false,
+    }).then((res) => {
+      // adjust expected code if your backend returns 401 or 403
+      expect([401, 403]).to.include(res.status);
+    });
+  });
+
+  it("create / list subject", () => {
+    cy.request({
+      method: "POST",
+      url: `${BE}/subjects`,
+      headers: { Authorization: `Bearer ${Cypress.env("token")}` },
       body: { name: "Math" },
     }).then((res) => {
-      subjectId = res.body.id;
+      expect(res.status).to.eq(201);
+      expect(res.body).to.have.property("id");
       expect(res.body).to.have.property("name", "Math");
+      Cypress.env("subjectId", res.body.id);
     });
-  });
 
-  it("gets subject list", () => {
     cy.request({
       method: "GET",
-      url: `${url}/subjects`,
-      headers: { Authorization: `Bearer ${token}` },
-    }).its("status").should("eq", 200);
-  });
-
-  it("creates task", () => {
-    cy.request({
-      method: "POST",
-      url: `${url}/tasks`,
-      headers: { Authorization: `Bearer ${token}` },
-      body: { subjectId, name: "Homework" },
+      url: `${BE}/subjects`,
+      headers: { Authorization: `Bearer ${Cypress.env("token")}` },
     }).then((res) => {
-      taskId = res.body.id;
-      expect(res.body).to.have.property("name", "Homework");
+      expect(res.status).to.eq(200);
+      expect(res.body).to.be.an("array");
+      expect(res.body.some((s: any) => s.name === "Math")).to.be.true;
     });
   });
 
-  it("updates task", () => {
+  it("create / update / delete task", () => {
+    const subjectId = Cypress.env("subjectId");
+
+    // create task
+    cy.request({
+      method: "POST",
+      url: `${BE}/tasks`,
+      headers: { Authorization: `Bearer ${Cypress.env("token")}` },
+      body: { subjectId, name: "Homework" },
+    }).then((res) => {
+      expect(res.status).to.eq(201);
+      expect(res.body).to.have.property("id");
+      expect(res.body).to.have.property("name", "Homework");
+      expect(res.body).to.have.property("subjectId", subjectId);
+      Cypress.env("taskId", res.body.id);
+    });
+
+    // update task
     cy.request({
       method: "PATCH",
-      url: `${url}/tasks/${taskId}`,
-      headers: { Authorization: `Bearer ${token}` },
-      body: { name: "Updated Homework" },
+      url: `${BE}/tasks/${Cypress.env("taskId")}`,
+      headers: { Authorization: `Bearer ${Cypress.env("token")}` },
+      body: { name: "Homework Updated" },
+    }).its("status").should("eq", 200);
+
+    // optional: try create task with invalid subjectId -> expect 400/404
+    cy.request({
+      method: "POST",
+      url: `${BE}/tasks`,
+      headers: { Authorization: `Bearer ${Cypress.env("token")}` },
+      body: { subjectId: 9999999, name: "Bad" },
+      failOnStatusCode: false,
+    }).then((res) => {
+      // if your backend returns 400 or 404, include them here; otherwise adjust
+      expect([400, 404]).to.include(res.status);
+    });
+
+    // delete task
+    cy.request({
+      method: "DELETE",
+      url: `${BE}/tasks/${Cypress.env("taskId")}`,
+      headers: { Authorization: `Bearer ${Cypress.env("token")}` },
     }).its("status").should("eq", 200);
   });
 
-  it("deletes task", () => {
+  it("delete subject", () => {
     cy.request({
       method: "DELETE",
-      url: `${url}/tasks/${taskId}`,
-      headers: { Authorization: `Bearer ${token}` },
+      url: `${BE}/subjects/${Cypress.env("subjectId")}`,
+      headers: { Authorization: `Bearer ${Cypress.env("token")}` },
     }).its("status").should("eq", 200);
   });
 });
